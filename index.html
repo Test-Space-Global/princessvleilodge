@@ -330,34 +330,74 @@
     .deck-section .sec-label::before { background: rgba(200,169,110,.4); }
     .deck-section h2 { color: var(--linen); }
     .deck-section h2 em { color: var(--gold-lt); }
-    .deck-section .sec-intro { color: rgba(245,240,232,.6); }
-    .deck-hdr { max-width: 500px; margin-bottom: 44px; }
+    .deck-section .sec-intro { color: rgba(245,240,232,.62); margin-top: 14px; }
 
-    .deck-grid {
+    .deck-split {
       display: grid;
-      grid-template-columns: 3fr 2fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 10px;
-      height: 520px;
-    }
-    .deck-grid .big {
-      grid-row: 1 / 3;
-      width: 100%; height: 100%;
-      object-fit: cover; border-radius: var(--radius);
-    }
-    .deck-grid .sm {
-      width: 100%; height: 100%;
-      object-fit: cover; border-radius: var(--radius);
+      grid-template-columns: 1fr 1.4fr;
+      gap: 56px;
+      align-items: center;
     }
 
-    @media (max-width: 640px) {
-      .deck-grid {
+    .deck-text { }
+    .deck-feats {
+      list-style: none; margin-top: 28px;
+    }
+    .deck-feats li {
+      display: flex; align-items: flex-start; gap: 10px;
+      color: rgba(245,240,232,.65); font-size: .9rem;
+      padding: 7px 0; border-bottom: 1px solid rgba(245,240,232,.08);
+    }
+    .deck-feats li::before { content: '✦'; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+    /* Photo grid: tall on left, two stacked on right */
+    .deck-photos {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 10px;
+      height: 540px;
+    }
+    .dp-tall {
+      grid-row: span 2;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      border-radius: var(--radius);
+    }
+    .dp-stack {
+      display: flex; flex-direction: column; gap: 10px;
+      height: 100%;
+    }
+    .dp-stack img {
+      flex: 1; width: 100%;
+      object-fit: cover; object-position: center top;
+      border-radius: var(--radius);
+      min-height: 0;
+    }
+
+    .pool-placeholder {
+      flex: 1; border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      border: 1.5px dashed rgba(200,169,110,.25);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 0;
+    }
+    .pool-placeholder span {
+      font-size: .78rem; letter-spacing: .06em; text-transform: uppercase;
+      color: rgba(200,169,110,.35); text-align: center; line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .deck-split { grid-template-columns: 1fr; gap: 40px; }
+      .deck-photos { height: 420px; }
+    }
+    @media (max-width: 560px) {
+      .deck-photos {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
         height: auto;
       }
-      .deck-grid .big { grid-row: auto; aspect-ratio: 4/3; height: auto; }
-      .deck-grid .sm  { aspect-ratio: 4/3; height: auto; }
+      .dp-tall { grid-row: auto; aspect-ratio: 4/3; height: auto; }
+      .dp-stack { flex-direction: row; height: 220px; }
+      .pool-placeholder { display: none; }
     }
 
     /* ── LOCATION ─────────────────────────────────────────── */
@@ -729,28 +769,47 @@
 <!-- ── DECK / GALLERY ─────────────────────────────────────── -->
 <section id="gallery" class="deck-section" aria-labelledby="gallery-heading">
   <div class="container">
-    <div class="deck-hdr">
-      <p class="sec-label">The Grounds</p>
-      <h2 id="gallery-heading">Sun deck, pool &amp;<br><em>golden-hour garden</em></h2>
-      <p class="sec-intro">The tiered timber deck is the beating heart of the property — built for morning coffee, afternoon lounging, and evenings that linger into Cape Town sunsets.</p>
-    </div>
-    <div class="deck-grid">
-      <!--
-        LOCAL images — already in assets/images/
-        deck-angle.jpg  = close-up angle shot of the tiered deck
-        deck-front.jpg  = front-on wide shot with lodge behind
-      -->
-      <img class="big" src="assets/images/deck-angle.jpg" alt="Tiered timber sun deck at dusk with two loungers" loading="lazy" width="900" height="1200" />
-      <img class="sm"  src="assets/images/deck-front.jpg" alt="Front view of lodge and sun deck at twilight" loading="lazy" width="700" height="525" />
-      <!--
-        PLACEHOLDER: replace with a third photo once you have one
-        e.g. pool shot, garden wide, or interior common area
-      -->
-      <img class="sm"
-        src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/9eef6fad-5a98-43a7-b0be-65f7cb7acc37.jpeg?im_w=800"
-        alt="Lodge interior"
-        loading="lazy" width="700" height="525"
-      />
+    <div class="deck-split">
+
+      <!-- LEFT: text -->
+      <div class="deck-text">
+        <p class="sec-label">The Grounds</p>
+        <h2 id="gallery-heading">Sun deck, pool &amp;<br><em>golden-hour garden</em></h2>
+        <p class="sec-intro">The tiered timber deck is the beating heart of the property — built for morning coffee, afternoon lounging, and evenings that linger into Cape Town sunsets.</p>
+        <ul class="deck-feats">
+          <li>Tiered hardwood sun deck with loungers</li>
+          <li>Shared swimming pool</li>
+          <li>Lush lawns bordering the nature reserve</li>
+          <li>Braai / BBQ facilities on site</li>
+          <li>Garden lighting for evening ambience</li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: photo grid — tall left, stacked right -->
+      <div class="deck-photos">
+        <img
+          class="dp-tall"
+          src="assets/images/deck-angle.jpg"
+          alt="Tiered timber sun deck at dusk — close-up angle showing the three levels and sun loungers"
+          loading="lazy"
+        />
+        <div class="dp-stack">
+          <img
+            src="assets/images/deck-front.jpg"
+            alt="Front view of the full lodge at twilight with tiered deck and lawns in foreground"
+            loading="lazy"
+          />
+          <!--
+            POOL PHOTO SLOT — when you have a pool photo:
+            1. Add it to assets/images/pool.jpg
+            2. Replace the img below with: <img src="assets/images/pool.jpg" alt="Shared swimming pool" loading="lazy" />
+          -->
+          <div class="pool-placeholder" aria-hidden="true">
+            <span>Pool photo<br>coming soon</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
