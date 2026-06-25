@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Princess Vlei Lodge — Cape Town</title>
+  <meta name="description" content="Four individually named lodge units nestled beside Princess Vlei wetland, Cape Town. Pool, garden deck, birdlife. Book direct or on Airbnb." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ─────────────────────────────── */
+    :root {
+      --sage:    #4a5f42;
+      --sage-dk: #38492f;
+      --sage-lt: #6b7f63;
+      --linen:   #f5f0e8;
+      --linen-dk:#ede6d6;
+      --bark:    #2c1f14;
+      --gold:    #c8a96e;
+      --gold-lt: #dfc28c;
+      --white:   #ffffff;
+
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body:    'DM Sans', system-ui, sans-serif;
+
+      --radius:  6px;
+      --shadow:  0 4px 24px rgba(44,31,20,.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--linen);
+      color: var(--bark);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── UTILITY ────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+
+    /* ── NAV ────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(74, 95, 66, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(200,169,110,.25);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.35rem; font-weight: 600;
+      color: var(--linen); letter-spacing: .02em;
+      text-decoration: none; line-height: 1.2;
+    }
+    .nav-logo span { display: block; font-size: .7rem; font-family: var(--body); font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-lt); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: rgba(245,240,232,.82); font-size: .88rem;
+      text-decoration: none; letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold-lt); }
+    .nav-book {
+      background: var(--gold); color: var(--bark) !important;
+      font-weight: 500; padding: 8px 18px; border-radius: var(--radius);
+      transition: background .2s !important;
+    }
+    .nav-book:hover { background: var(--gold-lt) !important; color: var(--bark) !important; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; align-items: flex-end;
+      background: var(--sage-dk);
+      overflow: hidden;
+      padding-top: 64px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(38,49,30,.2) 0%, rgba(38,49,30,.65) 70%, rgba(38,49,30,.9) 100%),
+        url('https://a0.muscache.com/im/pictures/hosting/Hosting-1543975056455944574/original/56554075-cafd-42f8-86e5-4fed1bf00208.jpeg?im_w=1200') center/cover no-repeat;
+    }
+
+    /* Subtle animated reeds overlay */
+    .hero-bg::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(to top, rgba(38,49,30,.7), transparent);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 64px 24px 80px;
+      max-width: 1100px; margin: 0 auto; width: 100%;
+    }
+    .hero-eyebrow {
+      font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold-lt); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--gold); }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 400; line-height: 1.05;
+      color: var(--linen); margin-bottom: 8px;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold-lt); }
+    .hero-sub {
+      font-size: 1.1rem; color: rgba(245,240,232,.78);
+      max-width: 520px; margin-bottom: 40px; margin-top: 16px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; font-family: var(--body); font-size: .9rem;
+      font-weight: 500; letter-spacing: .04em; text-decoration: none;
+      padding: 14px 28px; border-radius: var(--radius); transition: all .2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--gold); color: var(--bark); }
+    .btn-primary:hover { background: var(--gold-lt); }
+    .btn-outline {
+      background: transparent; color: var(--linen);
+      border: 1.5px solid rgba(245,240,232,.5);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold-lt); }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(245,240,232,.45); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-hint svg { width: 20px; opacity: .5; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── INTRO STRIP ────────────────────────── */
+    .intro-strip {
+      background: var(--sage);
+      padding: 28px 24px;
+    }
+    .intro-strip-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat { text-align: center; color: var(--linen); }
+    .stat-num { font-family: var(--display); font-size: 2rem; font-weight: 600; color: var(--gold-lt); }
+    .stat-label { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; opacity: .75; }
+    .strip-divider { width: 1px; height: 40px; background: rgba(245,240,232,.2); }
+    @media (max-width: 500px) { .strip-divider { display: none; } }
+
+    /* ── SECTION SHARED ─────────────────────── */
+    section { padding: 96px 0; }
+    .section-label {
+      font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--sage-lt); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--sage-lt); }
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.15;
+      color: var(--bark);
+    }
+    h2 em { font-style: italic; color: var(--sage); }
+    .section-intro { font-size: 1.05rem; color: #5a4a3a; max-width: 560px; margin-top: 16px; line-height: 1.7; }
+
+    /* ── ABOUT / DECK ───────────────────────── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center; margin-top: 56px;
+    }
+    .about-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .about-imgs img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: var(--radius);
+    }
+    .about-imgs img:first-child { margin-top: 32px; }
+    .about-body h3 {
+      font-family: var(--display);
+      font-size: 1.6rem; font-weight: 400;
+      margin-bottom: 16px; color: var(--bark);
+    }
+    .about-body p { color: #5a4a3a; margin-bottom: 16px; line-height: 1.75; }
+    .feature-list { list-style: none; margin-top: 20px; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .92rem; color: #5a4a3a; padding: 6px 0;
+      border-bottom: 1px solid rgba(74,95,66,.12);
+    }
+    .feature-list li::before { content: '✦'; color: var(--gold); margin-top: 1px; flex-shrink: 0; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── UNITS ──────────────────────────────── */
+    .units-section { background: var(--linen-dk); }
+    .units-header { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+    .units-header .section-label { justify-content: center; }
+    .units-header .section-label::before { display: none; }
+
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .unit-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(44,31,20,.18); }
+
+    .unit-card-img {
+      aspect-ratio: 4/3; overflow: hidden;
+    }
+    .unit-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .unit-card:hover .unit-card-img img { transform: scale(1.04); }
+
+    /* Bird nameplate — the signature element */
+    .unit-nameplate {
+      background: var(--sage);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .unit-nameplate-bird { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); flex-shrink: 0; }
+    .unit-nameplate-text { color: var(--linen); }
+    .unit-nameplate-name { font-family: var(--display); font-size: 1.3rem; font-weight: 600; line-height: 1.1; }
+    .unit-nameplate-sub { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+
+    .unit-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .unit-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .unit-meta-item { font-size: .82rem; color: #6a5a4a; display: flex; align-items: center; gap: 5px; }
+    .unit-meta-item svg { width: 14px; opacity: .6; }
+    .unit-desc { font-size: .9rem; color: #5a4a3a; line-height: 1.65; flex: 1; margin-bottom: 20px; }
+    .unit-rating { display: flex; align-items: center; gap: 6px; font-size: .82rem; color: #6a5a4a; margin-bottom: 16px; }
+    .unit-rating .stars { color: var(--gold); }
+
+    .unit-ctas { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-sm { font-size: .82rem; padding: 9px 16px; }
+    .btn-sage { background: var(--sage); color: var(--linen); }
+    .btn-sage:hover { background: var(--sage-dk); }
+    .btn-ghost { background: transparent; color: var(--sage); border: 1.5px solid var(--sage); }
+    .btn-ghost:hover { background: var(--sage); color: var(--linen); }
+
+    /* ── GALLERY / DECK ─────────────────────── */
+    .deck-section { background: var(--bark); }
+    .deck-section .section-label, .deck-section h2 { color: var(--linen); }
+    .deck-section h2 em { color: var(--gold-lt); }
+    .deck-section .section-intro { color: rgba(245,240,232,.65); }
+    .deck-header { max-width: 520px; margin-bottom: 48px; }
+    .deck-grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 12px; }
+    .deck-grid img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: var(--radius);
+    }
+    .deck-grid .big { grid-row: span 2; aspect-ratio: 3/4; }
+    .deck-grid .sm { aspect-ratio: 4/3; }
+
+    @media (max-width: 600px) {
+      .deck-grid { grid-template-columns: 1fr; }
+      .deck-grid .big { grid-row: span 1; aspect-ratio: 4/3; }
+    }
+
+    /* ── LOCATION ───────────────────────────── */
+    .location-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center; margin-top: 56px;
+    }
+    .location-map {
+      aspect-ratio: 4/3; border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .location-map iframe { width: 100%; height: 100%; border: none; }
+    .distance-list { list-style: none; margin-top: 24px; }
+    .distance-list li {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid rgba(74,95,66,.15);
+      font-size: .92rem; color: #5a4a3a;
+    }
+    .distance-list li span:last-child { color: var(--sage); font-weight: 500; }
+
+    @media (max-width: 768px) {
+      .location-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── BOOK DIRECT ────────────────────────── */
+    .book-section {
+      background: var(--sage);
+      text-align: center;
+      padding: 96px 24px;
+    }
+    .book-section h2, .book-section .section-label { color: var(--linen); }
+    .book-section h2 em { color: var(--gold-lt); }
+    .book-section .section-intro { color: rgba(245,240,232,.75); margin: 16px auto 0; }
+    .book-section .section-label { justify-content: center; }
+    .book-section .section-label::before { display: none; }
+    .book-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+    .btn-linen { background: var(--linen); color: var(--bark); }
+    .btn-linen:hover { background: var(--white); }
+    .btn-linen-outline { background: transparent; color: var(--linen); border: 1.5px solid rgba(245,240,232,.5); }
+    .btn-linen-outline:hover { border-color: var(--linen); }
+
+    /* ── FOOTER ─────────────────────────────── */
+    footer {
+      background: var(--bark); color: rgba(245,240,232,.55);
+      padding: 48px 24px; text-align: center; font-size: .82rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { color: var(--gold-lt); }
+    .footer-logo {
+      font-family: var(--display); font-size: 1.6rem;
+      color: var(--linen); margin-bottom: 6px;
+    }
+    .footer-logo span { font-style: italic; color: var(--gold-lt); }
+    .footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 16px 0 24px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Site navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      Princess Vlei Lodge
+      <span>Cape Town, South Africa</span>
+    </a>
+    <div class="nav-links">
+      <a href="#units">Our Units</a>
+      <a href="#location">Location</a>
+      <a href="#book" class="nav-book btn">Book Now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-bg" role="img" aria-label="Princess Vlei Lodge garden at dusk"></div>
+  <div class="hero-content container">
+    <p class="hero-eyebrow">Princess Vlei · Cape Town · South Africa</p>
+    <h1>Where the <em>wetland<br>meets your window</em></h1>
+    <p class="hero-sub">Four individually named lodge units set in a lush garden beside the Princess Vlei nature reserve. Pool, timber sun deck, free-roaming birdlife — and the city five minutes away.</p>
+    <div class="hero-ctas">
+      <a href="#book" class="btn btn-primary">Book Direct</a>
+      <a href="#units" class="btn btn-outline">Explore Units</a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    scroll
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip" aria-label="Quick facts">
+  <div class="intro-strip-inner">
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Lodge Units</div></div>
+    <div class="strip-divider"></div>
+    <div class="stat"><div class="stat-num">★ 4.8</div><div class="stat-label">Avg. Airbnb Rating</div></div>
+    <div class="strip-divider"></div>
+    <div class="stat"><div class="stat-num">10 min</div><div class="stat-label">to Cape Town CBD</div></div>
+    <div class="strip-divider"></div>
+    <div class="stat"><div class="stat-num">1</div><div class="stat-label">Swimming Pool</div></div>
+    <div class="strip-divider"></div>
+    <div class="stat"><div class="stat-num">Vlet</div><div class="stat-label">Wetland on Doorstep</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">About the Lodge</p>
+    <h2>A <em>nature retreat</em><br>with city convenience</h2>
+    <div class="about-grid">
+      <div class="about-imgs">
+        <img
+          src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/c170a473-707a-4fb2-82c4-4fb0d45d0357.jpeg?im_w=720"
+          alt="Interior of Starling unit — comfortable 1-bedroom apartment"
+          loading="lazy"
+        />
+        <img
+          src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975053783720283/original/5b69e5ee-18a4-48e0-8279-ef3ade99b47e.jpeg?im_w=720"
+          alt="Blue Crane unit living area"
+          loading="lazy"
+        />
+      </div>
+      <div class="about-body">
+        <h3>Named after the birds that call the vlei home</h3>
+        <p>Princess Vlei Lodge sits on the edge of one of Cape Town's most beloved urban wetlands — a haven for pelicans, blue cranes, sunbirds and starlings. Each unit is named for a resident species and styled for relaxed, nature-connected living.</p>
+        <p>The property features a shared swimming pool, a tiered timber sun deck, and landscaped lawns that blur gently into the reeds. Whether you're here for a weekend getaway or a longer stay, the lodge offers honest hospitality without unnecessary fuss.</p>
+        <ul class="feature-list">
+          <li>Swimming pool shared by all units</li>
+          <li>Tiered timber sun deck with loungers</li>
+          <li>Fully equipped kitchens in every unit</li>
+          <li>Private entrances &amp; bathrooms throughout</li>
+          <li>Secure off-street parking</li>
+          <li>Princess Vlei Nature Reserve walking trail access</li>
+          <li>Braai / BBQ facilities on site</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNITS -->
+<section id="units" class="units-section">
+  <div class="container">
+    <div class="units-header">
+      <p class="section-label">Accommodation</p>
+      <h2>Choose <em>your bird</em></h2>
+      <p class="section-intro" style="margin:16px auto 0;">Four distinct units, from romantic one-bedrooms to spacious three-bedroom apartments. Every stay includes pool access and garden.</p>
+    </div>
+
+    <div class="units-grid">
+
+      <!-- Starling -->
+      <article class="unit-card">
+        <div class="unit-card-img">
+          <img
+            src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/c170a473-707a-4fb2-82c4-4fb0d45d0357.jpeg?im_w=720"
+            alt="Starling unit interior"
+            loading="lazy"
+          />
+        </div>
+        <div class="unit-nameplate">
+          <!-- Starling bird icon (SVG stand-in styled to match brand) -->
+          <svg class="unit-nameplate-bird" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="20" cy="22" rx="10" ry="8" fill="#2a4a3a"/>
+            <ellipse cx="20" cy="22" rx="9" ry="7" fill="#1a3a2a" opacity=".5"/>
+            <circle cx="20" cy="22" r="7" fill="#2a5a3a"/>
+            <!-- speckles -->
+            <circle cx="17" cy="20" r="1" fill="#9de0c0" opacity=".6"/>
+            <circle cx="22" cy="19" r="1" fill="#9de0c0" opacity=".6"/>
+            <circle cx="19" cy="24" r="1" fill="#9de0c0" opacity=".6"/>
+            <circle cx="23" cy="23" r=".8" fill="#9de0c0" opacity=".5"/>
+            <!-- head -->
+            <circle cx="20" cy="14" r="5" fill="#1a3a2a"/>
+            <circle cx="21.5" cy="13" r="1.5" fill="#000" opacity=".8"/>
+            <circle cx="22" cy="12.5" r=".6" fill="#fff" opacity=".7"/>
+            <!-- beak -->
+            <polygon points="20,14 24,13 20,15" fill="#c8a96e"/>
+            <!-- tail -->
+            <path d="M10 26 Q8 32 6 34 Q12 30 14 27Z" fill="#1a3a2a"/>
+            <!-- wing tip -->
+            <path d="M28 22 Q32 18 30 28 Q26 26 28 22Z" fill="#1a3a2a"/>
+          </svg>
+          <div class="unit-nameplate-text">
+            <div class="unit-nameplate-name">Starling</div>
+            <div class="unit-nameplate-sub">Unit 1 · 1-Bedroom</div>
+          </div>
+        </div>
+        <div class="unit-card-body">
+          <div class="unit-meta">
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+              1 Bedroom
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Up to 3 guests
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 22v-2a7 7 0 017-7h4a7 7 0 017 7v2M8 7h.01M3 5h18v4H3z"/></svg>
+              1 Bath
+            </span>
+          </div>
+          <p class="unit-desc">Beautifully appointed one-bedroom apartment designed for comfort and relaxation. Perfect for couples or solo travellers — one of the few places in the area with a pool.</p>
+          <div class="unit-rating"><span class="stars">★★★★½</span> 4.5 · 2 reviews</div>
+          <div class="unit-ctas">
+            <a href="https://www.airbnb.com/rooms/1543975047957658188" target="_blank" rel="noopener" class="btn btn-sm btn-sage">View on Airbnb</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Blue Crane -->
+      <article class="unit-card">
+        <div class="unit-card-img">
+          <img
+            src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975053783720283/original/5b69e5ee-18a4-48e0-8279-ef3ade99b47e.jpeg?im_w=720"
+            alt="Blue Crane unit"
+            loading="lazy"
+          />
+        </div>
+        <div class="unit-nameplate">
+          <svg class="unit-nameplate-bird" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Blue Crane body -->
+            <ellipse cx="20" cy="24" rx="8" ry="6" fill="#3a5a8a"/>
+            <!-- neck -->
+            <path d="M20 24 Q18 16 19 10" stroke="#2a4a7a" stroke-width="3" stroke-linecap="round"/>
+            <!-- head -->
+            <circle cx="19" cy="9" r="3.5" fill="#2a4a7a"/>
+            <circle cx="20.5" cy="8" r="1" fill="#000" opacity=".8"/>
+            <circle cx="21" cy="7.5" r=".4" fill="#fff" opacity=".7"/>
+            <!-- beak -->
+            <path d="M19 10 L24 9 L19 11Z" fill="#8aadcf"/>
+            <!-- tail plumes -->
+            <path d="M28 24 Q34 20 36 28 Q30 28 28 24Z" fill="#2a4a7a"/>
+            <path d="M28 26 Q35 26 36 32 Q30 30 28 26Z" fill="#3a5a8a" opacity=".7"/>
+            <!-- legs -->
+            <line x1="17" y1="30" x2="15" y2="38" stroke="#5a7a9a" stroke-width="1.5"/>
+            <line x1="21" y1="30" x2="22" y2="38" stroke="#5a7a9a" stroke-width="1.5"/>
+          </svg>
+          <div class="unit-nameplate-text">
+            <div class="unit-nameplate-name">Blue Crane</div>
+            <div class="unit-nameplate-sub">Unit 2 · 3-Bedroom</div>
+          </div>
+        </div>
+        <div class="unit-card-body">
+          <div class="unit-meta">
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+              3 Bedrooms
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Up to 7 guests
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 22v-2a7 7 0 017-7h4a7 7 0 017 7v2M8 7h.01M3 5h18v4H3z"/></svg>
+              2 Baths
+            </span>
+          </div>
+          <p class="unit-desc">Spacious three-bedroom apartment with a double bed, four single beds, and two bathrooms. Fully equipped kitchen with gas stove. Ideal for families or groups.</p>
+          <div class="unit-rating"><span class="stars">★★★★</span> New listing</div>
+          <div class="unit-ctas">
+            <a href="https://www.airbnb.com/rooms/1543975053783720283" target="_blank" rel="noopener" class="btn btn-sm btn-sage">View on Airbnb</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pelican -->
+      <article class="unit-card">
+        <div class="unit-card-img">
+          <img
+            src="https://a0.muscache.com/im/pictures/hosting/Hosting-1543975056455944574/original/56554075-cafd-42f8-86e5-4fed1bf00208.jpeg?im_w=720"
+            alt="Pelican unit"
+            loading="lazy"
+          />
+        </div>
+        <div class="unit-nameplate">
+          <svg class="unit-nameplate-bird" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Pelican body -->
+            <ellipse cx="20" cy="24" rx="9" ry="7" fill="#e8e4d8"/>
+            <!-- wing -->
+            <path d="M12 24 Q8 20 10 30 Q14 28 12 24Z" fill="#c8c4b8"/>
+            <!-- neck -->
+            <path d="M20 18 Q21 12 20 8" stroke="#e8e4d8" stroke-width="4" stroke-linecap="round"/>
+            <!-- head -->
+            <circle cx="20" cy="7" r="4" fill="#e8e4d8"/>
+            <!-- eye -->
+            <circle cx="21.5" cy="6" r="1.2" fill="#f5a623"/>
+            <circle cx="21.5" cy="6" r=".6" fill="#000"/>
+            <!-- beak + pouch -->
+            <path d="M20 9 L28 10 L28 14 Q24 16 20 12Z" fill="#f5a623"/>
+            <path d="M20 12 Q24 16 28 14 Q26 18 20 16Z" fill="#e8894a" opacity=".7"/>
+            <!-- tail -->
+            <path d="M29 24 Q33 22 32 28 Q28 27 29 24Z" fill="#c8c4b8"/>
+          </svg>
+          <div class="unit-nameplate-text">
+            <div class="unit-nameplate-name">Pelican</div>
+            <div class="unit-nameplate-sub">Unit 3 · 3-Bedroom</div>
+          </div>
+        </div>
+        <div class="unit-card-body">
+          <div class="unit-meta">
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+              3 Bedrooms
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Up to 6 guests
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 22v-2a7 7 0 017-7h4a7 7 0 017 7v2M8 7h.01M3 5h18v4H3z"/></svg>
+              2 Baths
+            </span>
+          </div>
+          <p class="unit-desc">Three double beds and two bathrooms — the most popular unit on the property. Gas stove, braai terrace, and direct garden access. Our top-rated listing.</p>
+          <div class="unit-rating"><span class="stars">★★★★★</span> 4.89 · Top Rated</div>
+          <div class="unit-ctas">
+            <a href="https://www.airbnb.com/rooms/1543975056455944574" target="_blank" rel="noopener" class="btn btn-sm btn-sage">View on Airbnb</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sunbird -->
+      <article class="unit-card">
+        <div class="unit-card-img">
+          <img
+            src="https://a0.muscache.com/im/pictures/hosting/Hosting-1543975061015217029/original/7f3fc1f1-3e03-4bc3-817e-b335103eb984.jpeg?im_w=720"
+            alt="Sunbird unit"
+            loading="lazy"
+          />
+        </div>
+        <div class="unit-nameplate">
+          <svg class="unit-nameplate-bird" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Sunbird body -->
+            <ellipse cx="20" cy="24" rx="8" ry="5" fill="#2a5a2a"/>
+            <!-- yellow chest -->
+            <ellipse cx="21" cy="25" rx="5" ry="3.5" fill="#f5c842"/>
+            <!-- wing -->
+            <path d="M13 23 Q10 18 14 28 Q16 26 13 23Z" fill="#1a4a1a"/>
+            <!-- tail -->
+            <path d="M28 24 Q34 20 35 24 Q32 26 28 26Z" fill="#1a4a1a"/>
+            <!-- long curved tail -->
+            <path d="M28 26 Q36 28 38 36" stroke="#1a4a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <!-- neck -->
+            <path d="M20 20 Q19 14 20 10" stroke="#2a5a2a" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- head - iridescent -->
+            <circle cx="20" cy="9" r="3.5" fill="#1a3a8a"/>
+            <circle cx="20" cy="9" r="3" fill="#2a5acc" opacity=".6"/>
+            <!-- eye -->
+            <circle cx="21" cy="8" r=".8" fill="#000"/>
+            <circle cx="21.3" cy="7.7" r=".3" fill="#fff" opacity=".8"/>
+            <!-- curved beak -->
+            <path d="M20 10 Q23 10 26 8" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+          <div class="unit-nameplate-text">
+            <div class="unit-nameplate-name">Sunbird</div>
+            <div class="unit-nameplate-sub">Unit 4 · 1-Bedroom · New 2025</div>
+          </div>
+        </div>
+        <div class="unit-card-body">
+          <div class="unit-meta">
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+              1 Bedroom
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Up to 3 guests
+            </span>
+            <span class="unit-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 22v-2a7 7 0 017-7h4a7 7 0 017 7v2M8 7h.01M3 5h18v4H3z"/></svg>
+              1 Bath
+            </span>
+          </div>
+          <p class="unit-desc">Newly built (2025). Modern one-bedroom with a double bed, sleeper couch, and fresh shower. Designed for comfort and convenience — everything brand new.</p>
+          <div class="unit-rating"><span class="stars">★★★★½</span> 4.6 · New Build</div>
+          <div class="unit-ctas">
+            <a href="https://www.airbnb.com/rooms/1543975061015217029" target="_blank" rel="noopener" class="btn btn-sm btn-sage">View on Airbnb</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- DECK / GALLERY -->
+<section id="gallery" class="deck-section">
+  <div class="container">
+    <div class="deck-header">
+      <p class="section-label" style="color:var(--gold);">The Grounds</p>
+      <h2>Sun deck, pool &amp;<br><em>golden-hour garden</em></h2>
+      <p class="section-intro">The tiered timber deck is the beating heart of the property — built for morning coffee, afternoon lounging, and evenings that linger.</p>
+    </div>
+    <div class="deck-grid">
+      <img
+        class="big"
+        src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/beaded11-7d97-4ff2-b2de-89f5da051667.jpeg?im_w=1200"
+        alt="Outdoor deck with two loungers at dusk"
+        loading="lazy"
+      />
+      <img
+        class="sm"
+        src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/9eef6fad-5a98-43a7-b0be-65f7cb7acc37.jpeg?im_w=720"
+        alt="Lodge interior living area"
+        loading="lazy"
+      />
+      <img
+        class="sm"
+        src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/e7c6c878-77c8-4110-9574-dfe29125b905.jpeg?im_w=720"
+        alt="Lodge bedroom"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="container">
+    <p class="section-label">Getting Here</p>
+    <h2>Set beside <em>Princess Vlei</em>,<br>close to everything</h2>
+    <div class="location-grid">
+      <div class="location-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.6!2d18.4844!3d-34.0241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5c7c4e0c6d6b%3A0x0!2sPrincess+Vlei%2C+Cape+Town!5e0!3m2!1sen!2sza!4v1700000000000"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Princess Vlei Lodge location map"
+        ></iframe>
+      </div>
+      <div>
+        <h3 style="font-family:var(--display);font-size:1.5rem;font-weight:400;margin-bottom:8px;color:var(--bark);">Heathfield, Cape Town</h3>
+        <p style="color:#5a4a3a;line-height:1.75;margin-bottom:24px;">Tucked into a quiet Heathfield street with direct access to Princess Vlei Nature Reserve — a protected wetland and birding site beloved by locals.</p>
+        <ul class="distance-list">
+          <li><span>Cape Town CBD</span><span>~12 min drive</span></li>
+          <li><span>Cape Town International Airport</span><span>~20 min drive</span></li>
+          <li><span>Tokai Forest &amp; Arboretum</span><span>~8 min drive</span></li>
+          <li><span>Muizenberg Beach</span><span>~15 min drive</span></li>
+          <li><span>Constantia Wine Valley</span><span>~12 min drive</span></li>
+          <li><span>Kalk Bay Village</span><span>~18 min drive</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK DIRECT -->
+<section id="book" class="book-section">
+  <div class="container">
+    <p class="section-label">Make a Reservation</p>
+    <h2>Book <em>direct</em> or via Airbnb</h2>
+    <p class="section-intro">Use Nightsbridge to book direct across all four units, or pick your unit on Airbnb. Either way, you'll be waking up beside the vlei.</p>
+    <div class="book-ctas">
+      <a href="https://book.nightsbridge.com/38899?nbid=377&startdate=2026-04-10&nights=8" target="_blank" rel="noopener" class="btn btn-linen">Book Direct via Nightsbridge</a>
+      <a href="https://www.airbnb.com/rooms/1543975056455944574" target="_blank" rel="noopener" class="btn btn-linen-outline">Browse on Airbnb</a>
+    </div>
+
+    <!-- individual unit quick links -->
+    <div style="margin-top:48px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://www.airbnb.com/rooms/1543975047957658188" target="_blank" rel="noopener" style="background:rgba(255,255,255,.12);color:var(--linen);border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);padding:8px 16px;text-decoration:none;font-size:.85rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.22)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">🐦 Starling — Unit 1</a>
+      <a href="https://www.airbnb.com/rooms/1543975053783720283" target="_blank" rel="noopener" style="background:rgba(255,255,255,.12);color:var(--linen);border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);padding:8px 16px;text-decoration:none;font-size:.85rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.22)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">🦅 Blue Crane — Unit 2</a>
+      <a href="https://www.airbnb.com/rooms/1543975056455944574" target="_blank" rel="noopener" style="background:rgba(255,255,255,.12);color:var(--linen);border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);padding:8px 16px;text-decoration:none;font-size:.85rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.22)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">🦢 Pelican — Unit 3</a>
+      <a href="https://www.airbnb.com/rooms/1543975061015217029" target="_blank" rel="noopener" style="background:rgba(255,255,255,.12);color:var(--linen);border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);padding:8px 16px;text-decoration:none;font-size:.85rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.22)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">🌟 Sunbird — Unit 4</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Princess <span>Vlei</span> Lodge</div>
+  <p>Heathfield, Cape Town · South Africa</p>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="#units">Our Units</a>
+    <a href="#location">Location</a>
+    <a href="https://book.nightsbridge.com/38899" target="_blank" rel="noopener">Book Direct</a>
+    <a href="mailto:info@princessvleilodge.co.za">Contact</a>
+  </nav>
+  <p>© 2025 Princess Vlei Lodge. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
