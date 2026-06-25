@@ -57,24 +57,24 @@
     }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 20px; max-width: 1100px; margin: 0 auto;
+      padding: 8px 20px; max-width: 1200px; margin: 0 auto;
       gap: 16px;
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.25rem; font-weight: 600; line-height: 1.15;
-      color: var(--linen); text-decoration: none; flex-shrink: 0;
+    .nav-logo-img {
+      flex-shrink: 0; line-height: 0;
     }
-    .nav-logo span {
-      display: block; font-size: .68rem; font-family: 'DM Sans', sans-serif;
-      font-weight: 400; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--gold-lt); margin-top: 1px;
+    .nav-logo-img img {
+      height: 52px; width: auto;
+      /* Logo has a sage bg — keep as-is, it blends with the nav */
     }
 
     /* Desktop links */
     .nav-links {
       display: flex; align-items: center; gap: 24px; list-style: none;
+      flex: 1;
     }
+    .nav-links-right { justify-content: flex-end; }
+    .nav-links-left  { justify-content: flex-end; }
     .nav-links a {
       color: rgba(245,240,232,.8); font-size: .875rem;
       text-decoration: none; letter-spacing: .04em;
@@ -119,6 +119,7 @@
     @media (max-width: 720px) {
       .nav-links { display: none; }
       .nav-burger { display: block; }
+      .nav-logo-img img { height: 42px; }
     }
 
     /* ── HERO ─────────────────────────────────────────────── */
@@ -295,25 +296,18 @@
 
     /* Bird nameplate — the signature element matching the physical signage */
     .nameplate {
-      background: var(--sage); padding: 13px 18px;
-      display: flex; align-items: center; gap: 12px;
+      line-height: 0; /* collapse whitespace under img */
+      overflow: hidden;
     }
     .nameplate-icon {
-      width: 38px; height: 38px; flex-shrink: 0;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
+      width: 100%;
+      height: auto;
+      display: block;
+      /* The PNGs already have the sage bg + bird + name baked in */
     }
-    .nameplate-icon-svg {
-      width: 38px; height: 38px; flex-shrink: 0;
-    }
-    .np-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 600; color: var(--linen); line-height: 1.1;
-    }
-    .np-sub {
-      font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(245,240,232,.65); margin-top: 1px;
-    }
+    /* Keep the old .np-name / .np-sub classes in case we need them, but they're
+       not rendered since the PNG contains the text already */
+    .np-name, .np-sub { display: none; }
 
     .unit-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
     .unit-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -458,13 +452,17 @@
 <header>
   <nav class="site-nav" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        Princess Vlei Lodge
-        <span>Cape Town · South Africa</span>
-      </a>
-      <ul class="nav-links" role="list">
+      <!-- Left: nav links (desktop) -->
+      <ul class="nav-links nav-links-left" role="list">
         <li><a href="#about">About</a></li>
         <li><a href="#units">Units</a></li>
+      </ul>
+      <!-- Center: logo -->
+      <a href="#" class="nav-logo-img" aria-label="Princess Vlei Lodge — home">
+        <img src="assets/images/logo2.png" alt="Princess Vlei Lodge" height="52" />
+      </a>
+      <!-- Right: nav links (desktop) + burger -->
+      <ul class="nav-links nav-links-right" role="list">
         <li><a href="#location">Location</a></li>
         <li><a href="#book" class="nav-cta">Book Now</a></li>
       </ul>
@@ -583,21 +581,7 @@
           />
         </div>
         <div class="nameplate">
-          <!-- Starling SVG -->
-          <svg class="nameplate-icon-svg" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-            <ellipse cx="19" cy="22" rx="9" ry="6.5" fill="#1a3a28"/>
-            <circle cx="17" cy="20" r=".9" fill="#7de0b0" opacity=".65"/>
-            <circle cx="21" cy="19" r=".9" fill="#7de0b0" opacity=".65"/>
-            <circle cx="19" cy="24" r=".8" fill="#7de0b0" opacity=".55"/>
-            <circle cx="22" cy="23" r=".7" fill="#7de0b0" opacity=".5"/>
-            <circle cx="16" cy="23" r=".7" fill="#7de0b0" opacity=".45"/>
-            <circle cx="19" cy="13" r="4.5" fill="#122a1e"/>
-            <circle cx="21" cy="12" r="1.3" fill="#000" opacity=".8"/>
-            <circle cx="21.5" cy="11.5" r=".5" fill="#fff" opacity=".75"/>
-            <polygon points="19,13.5 23.5,12.5 19,14.5" fill="#c8a96e"/>
-            <path d="M10 26 Q8 31 6 33 Q11 29 13 26Z" fill="#0e2018"/>
-            <path d="M27 22 Q31 18 30 27 Q25 25 27 22Z" fill="#0e2018"/>
-          </svg>
+          <img class="nameplate-icon" src="assets/images/starling1.png" alt="Starling bird illustration" />
           <div>
             <div class="np-name">Starling</div>
             <div class="np-sub">Unit 1 · 1-Bedroom</div>
@@ -635,19 +619,7 @@
           />
         </div>
         <div class="nameplate">
-          <!-- Blue Crane SVG -->
-          <svg class="nameplate-icon-svg" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-            <ellipse cx="19" cy="24" rx="8" ry="5.5" fill="#2a4a7a"/>
-            <path d="M19 22 Q17.5 14 18 9" stroke="#1e3d6e" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="18" cy="8" r="3.2" fill="#1e3d6e"/>
-            <circle cx="19.5" cy="7" r=".9" fill="#000" opacity=".8"/>
-            <circle cx="20" cy="6.6" r=".35" fill="#fff" opacity=".75"/>
-            <path d="M18 9.5 L23 8.5 L18 10.5Z" fill="#7aaad0"/>
-            <path d="M27 24 Q33 19 34 27 Q28 27 27 24Z" fill="#1e3d6e"/>
-            <path d="M27 26 Q34 26 34 32 Q29 30 27 26Z" fill="#2a4a7a" opacity=".6"/>
-            <line x1="16" y1="29.5" x2="14" y2="37" stroke="#4a7aaa" stroke-width="1.3"/>
-            <line x1="20" y1="29.5" x2="21" y2="37" stroke="#4a7aaa" stroke-width="1.3"/>
-          </svg>
+          <img class="nameplate-icon" src="assets/images/bluecrane1.png" alt="Blue Crane bird illustration" />
           <div>
             <div class="np-name">Blue Crane</div>
             <div class="np-sub">Unit 2 · 3-Bedroom</div>
@@ -685,18 +657,7 @@
           />
         </div>
         <div class="nameplate">
-          <!-- Pelican SVG -->
-          <svg class="nameplate-icon-svg" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-            <ellipse cx="19" cy="24" rx="8.5" ry="6" fill="#ddd9cc"/>
-            <path d="M11 24 Q8 19 10 29 Q13 27 11 24Z" fill="#b8b4a6"/>
-            <path d="M19 19 Q20 13 19 9" stroke="#ddd9cc" stroke-width="3.5" stroke-linecap="round"/>
-            <circle cx="19" cy="8" r="3.8" fill="#ddd9cc"/>
-            <circle cx="20.8" cy="6.8" r="1.1" fill="#f0a820"/>
-            <circle cx="20.8" cy="6.8" r=".55" fill="#000"/>
-            <path d="M19 9.5 L28 10.5 L28 14.5 Q23.5 16 19 12.5Z" fill="#f0a820"/>
-            <path d="M19 12.5 Q23.5 16 28 14.5 Q26 18.5 19 16.5Z" fill="#d47a3a" opacity=".65"/>
-            <path d="M27.5 24 Q32 21.5 31 28 Q27 27 27.5 24Z" fill="#b8b4a6"/>
-          </svg>
+          <img class="nameplate-icon" src="assets/images/pelican1.png" alt="Pelican bird illustration" />
           <div>
             <div class="np-name">Pelican</div>
             <div class="np-sub">Unit 3 · 3-Bedroom · Top Rated</div>
@@ -734,20 +695,7 @@
           />
         </div>
         <div class="nameplate">
-          <!-- Sunbird SVG -->
-          <svg class="nameplate-icon-svg" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-            <ellipse cx="19" cy="23.5" rx="7.5" ry="4.5" fill="#1e4e1e"/>
-            <ellipse cx="20" cy="24.5" rx="4.5" ry="3" fill="#e8c020"/>
-            <path d="M12 22.5 Q9.5 17.5 13 27 Q15 25 12 22.5Z" fill="#163c16"/>
-            <path d="M27 23.5 Q33 19 34 23.5 Q31 25.5 27 25.5Z" fill="#163c16"/>
-            <path d="M27 25.5 Q35 27.5 37 35" stroke="#163c16" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M19 20 Q18.5 13.5 19 9.5" stroke="#1e4e1e" stroke-width="2.2" stroke-linecap="round"/>
-            <circle cx="19" cy="8.5" r="3.3" fill="#1535aa"/>
-            <circle cx="19" cy="8.5" r="2.8" fill="#2a4acc" opacity=".55"/>
-            <circle cx="20.2" cy="7.5" r=".75" fill="#000"/>
-            <circle cx="20.5" cy="7.2" r=".3" fill="#fff" opacity=".8"/>
-            <path d="M19 9.8 Q22 9.5 25.5 7.5" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <img class="nameplate-icon" src="assets/images/sunbird1.png" alt="Sunbird bird illustration" />
           <div>
             <div class="np-name">Sunbird</div>
             <div class="np-sub">Unit 4 · 1-Bedroom · New 2025</div>
