@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
 
+  <link rel="icon" type="image/png" href="assets/images/logo2.png" />
+  <link rel="apple-touch-icon" href="assets/images/logo2.png" />
+
   <style>
     /* ── TOKENS ───────────────────────────────────────────── */
     :root {
@@ -26,7 +29,7 @@
       --radius:     6px;
       --shadow:     0 4px 24px rgba(44,31,20,.13);
       --shadow-lg:  0 12px 48px rgba(44,31,20,.18);
-      --nav-h:      76px; /* 64px logo + 6px padding top/bottom */
+      --nav-h:      80px;
     }
 
     /* ── RESET ────────────────────────────────────────────── */
@@ -55,38 +58,45 @@
       border-bottom: 1px solid rgba(200,169,110,.25);
     }
     .nav-inner {
-      display: flex; align-items: center;
-      padding: 6px 24px; max-width: 1200px; margin: 0 auto;
-      gap: 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 24px;
+      max-width: 1300px; margin: 0 auto;
+      height: var(--nav-h);
     }
-    .nav-logo-img {
-      flex-shrink: 0; line-height: 0;
-      border-radius: 4px; overflow: hidden;
-      margin-right: 28px;
-    }
-    .nav-logo-img img { height: 64px; width: auto; display: block; }
-    .nav-spacer { flex: 1; }
-
-    /* Desktop links — all left, after logo */
+    /* Left column: nav links */
     .nav-links {
       display: flex; align-items: center; gap: 28px; list-style: none;
+      justify-content: flex-start;
     }
     .nav-links a {
-      color: rgba(245,240,232,.8); font-size: .875rem;
-      text-decoration: none; letter-spacing: .04em;
-      transition: color .2s;
+      color: rgba(245,240,232,.82); font-size: .875rem;
+      text-decoration: none; letter-spacing: .05em;
+      transition: color .2s; white-space: nowrap;
     }
     .nav-links a:hover { color: var(--gold-lt); }
+
+    /* Center column: logo */
+    .nav-logo-img {
+      display: flex; justify-content: center; line-height: 0;
+      border-radius: 4px; overflow: hidden;
+    }
+    .nav-logo-img img { height: 72px; width: auto; display: block; }
+
+    /* Right column: Book Now button */
+    .nav-right {
+      display: flex; justify-content: flex-end; align-items: center;
+    }
     .nav-cta {
       background: var(--gold); color: var(--bark) !important;
-      font-weight: 500; padding: 9px 20px; border-radius: var(--radius);
+      font-weight: 500; padding: 10px 22px; border-radius: var(--radius);
       transition: background .2s; white-space: nowrap;
-      text-decoration: none; font-size: .875rem;
-      margin-left: 20px;
+      text-decoration: none; font-size: .875rem; letter-spacing: .04em;
     }
     .nav-cta:hover { background: var(--gold-lt) !important; }
 
-    /* Hamburger */
+    /* Hamburger — mobile only */
     .nav-burger {
       display: none; background: none; border: none; cursor: pointer;
       padding: 6px; color: var(--linen); flex-shrink: 0;
@@ -115,12 +125,15 @@
     }
 
     @media (max-width: 720px) {
+      .nav-inner {
+        grid-template-columns: auto 1fr auto;
+        padding: 0 16px;
+      }
       .nav-links { display: none; }
-      a.nav-cta { display: none; }
-      .nav-spacer { display: none; }
+      .nav-right { display: none; }
+      .nav-logo-img { justify-content: flex-start; }
+      .nav-logo-img img { height: 52px; }
       .nav-burger { display: block; }
-      .nav-logo-img img { height: 50px; }
-      .nav-logo-img { margin-right: 0; }
     }
 
     /* ── HERO ─────────────────────────────────────────────── */
@@ -136,7 +149,7 @@
       /* Airbnb CDN — works in-browser; replace with assets/images/hero-main.jpg once downloaded */
       background-image:
         linear-gradient(to bottom, rgba(30,42,22,.15) 0%, rgba(30,42,22,.55) 55%, rgba(30,42,22,.92) 100%),
-        url('https://a0.muscache.com/im/pictures/hosting/Hosting-1543975056455944574/original/56554075-cafd-42f8-86e5-4fed1bf00208.jpeg?im_w=1440');
+        url('assets/images/outside1.jpg');
       background-size: cover;
       background-position: center 30%;
     }
@@ -354,7 +367,18 @@
       opacity: 1;
     }
 
-    /* ── AMENITIES ────────────────────────────────────────── */
+    /* Grounds banner strip in units section */
+    .units-grounds-banner {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px; margin-bottom: 40px; border-radius: var(--radius); overflow: hidden;
+      height: 180px;
+    }
+    .units-grounds-banner img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+    }
+    @media (max-width: 640px) {
+      .units-grounds-banner { display: none; }
+    }
     .amenities-section { background: var(--linen); }
     .amenities-grid {
       display: grid;
@@ -577,28 +601,29 @@
 <header>
   <nav class="site-nav" aria-label="Main navigation">
     <div class="nav-inner">
-      <!-- Logo: left-anchored -->
-      <a href="#" class="nav-logo-img" aria-label="Princess Vlei Lodge — home">
-        <img src="assets/images/logo2.png" alt="Princess Vlei Lodge" height="64" />
-      </a>
-      <!-- All nav links together, left-aligned after logo -->
+      <!-- Left: nav links -->
       <ul class="nav-links" role="list">
         <li><a href="#about">About</a></li>
         <li><a href="#units">Units</a></li>
         <li><a href="#whole-lodge">Groups</a></li>
         <li><a href="#location">Location</a></li>
       </ul>
-      <!-- Spacer pushes Book Now to far right -->
-      <div class="nav-spacer"></div>
-      <a href="#book" class="btn nav-cta">Book Now</a>
-      <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer" id="burger-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <line x1="3" y1="6"  x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      </button>
-    </div>
+      <!-- Center: logo -->
+      <a href="#" class="nav-logo-img" aria-label="Princess Vlei Lodge — home">
+        <img src="assets/images/logo2.png" alt="Princess Vlei Lodge" />
+      </a>
+      <!-- Right: Book Now + mobile burger -->
+      <div class="nav-right">
+        <a href="#book" class="nav-cta">Book Now</a>
+        <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer" id="burger-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="3" y1="6"  x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div><!-- /nav-inner -->
     <div class="nav-drawer" id="nav-drawer" role="navigation" aria-label="Mobile navigation">
       <a href="#about"       onclick="closeDrawer()">About</a>
       <a href="#units"       onclick="closeDrawer()">Our Units</a>
@@ -650,18 +675,14 @@
     <div class="about-grid">
       <div class="about-imgs">
         <img
-          src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/c170a473-707a-4fb2-82c4-4fb0d45d0357.jpeg?im_w=800"
-          alt="Starling unit — comfortable one-bedroom interior"
+          src="assets/images/outside2.jpg"
+          alt="Princess Vlei Lodge — garden and grounds"
           loading="lazy" width="400" height="533"
-          referrerpolicy="no-referrer"
-          onerror="this.src='assets/images/deck-angle.jpg'"
         />
         <img
-          src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975053783720283/original/5b69e5ee-18a4-48e0-8279-ef3ade99b47e.jpeg?im_w=800"
-          alt="Blue Crane unit — living area"
+          src="assets/images/entrance.jpg"
+          alt="Lodge entrance and driveway"
           loading="lazy" width="400" height="533"
-          referrerpolicy="no-referrer"
-          onerror="this.src='assets/images/deck-front.jpg'"
         />
       </div>
       <div class="about-body">
@@ -691,18 +712,19 @@
       <p class="sec-intro">Four distinct units, from romantic one-bedrooms to spacious three-bedroom apartments. Every stay includes pool and garden access.</p>
     </div>
 
+    <!-- Grounds banner — hidden on mobile -->
+    <div class="units-grounds-banner" aria-hidden="true">
+      <img src="assets/images/outside4.jpg" alt="Princess Vlei Lodge — grounds and garden" loading="lazy" />
+      <img src="assets/images/outside6.jpg" alt="Views from the lodge property" loading="lazy" />
+      <img src="assets/images/outside7.jpg" alt="Lodge surroundings" loading="lazy" />
+    </div>
+
     <div class="units-grid">
 
       <!-- ── STARLING ── -->
       <article class="unit-card" aria-label="Starling — Unit 1">
         <div class="unit-img">
-          <img
-            src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975047957658188/original/c170a473-707a-4fb2-82c4-4fb0d45d0357.jpeg?im_w=800"
-            alt="Starling unit — modern one-bedroom interior"
-            loading="lazy" width="800" height="600"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-          />
-          <div class="unit-img-placeholder" style="display:none"><img src="assets/images/logo2.png" alt="" /><span class="unit-img-placeholder-hint">unit-starling-1.jpg</span></div>
+          <img src="assets/images/starling2.jpg" alt="Starling unit — one-bedroom interior" loading="lazy" />
         </div>
         <div class="nameplate">
           <img class="nameplate-icon" src="assets/images/starling1.png" alt="Starling bird illustration" />
@@ -721,7 +743,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
               Up to 3 guests
             </span>
-            <span class="meta-item">🛁 1 Bath</span>
+            <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16v4a4 4 0 01-4 4H8a4 4 0 01-4-4v-4z"/><path d="M6 12V6a2 2 0 012-2h1a2 2 0 012 2v1"/></svg> 1 Bath</span>
           </div>
           <p class="unit-desc">Beautifully appointed one-bedroom for couples or solo travellers seeking comfort and relaxation. One of the few properties in the area with a private pool on-site.</p>
           <div class="unit-rating"><span class="stars">★★★★½</span> 4.5 · 2 reviews</div>
@@ -737,13 +759,7 @@
       <!-- ── BLUE CRANE ── -->
       <article class="unit-card" aria-label="Blue Crane — Unit 2">
         <div class="unit-img">
-          <img
-            src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-1543975053783720283/original/5b69e5ee-18a4-48e0-8279-ef3ade99b47e.jpeg?im_w=800"
-            alt="Blue Crane unit — spacious three-bedroom living area"
-            loading="lazy" width="800" height="600"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-          />
-          <div class="unit-img-placeholder" style="display:none"><img src="assets/images/logo2.png" alt="" /><span class="unit-img-placeholder-hint">unit-bluecrane-1.jpg</span></div>
+          <img src="assets/images/blue2.jpg" alt="Blue Crane unit — three-bedroom living area" loading="lazy" />
         </div>
         <div class="nameplate">
           <img class="nameplate-icon" src="assets/images/bluecrane1.png" alt="Blue Crane bird illustration" />
@@ -762,7 +778,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
               Up to 7 guests
             </span>
-            <span class="meta-item">🛁 2 Baths</span>
+            <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16v4a4 4 0 01-4 4H8a4 4 0 01-4-4v-4z"/><path d="M6 12V6a2 2 0 012-2h1a2 2 0 012 2v1"/></svg> 2 Baths</span>
           </div>
           <p class="unit-desc">Spacious three-bedroom with a double bed, four single beds, and two bathrooms. Fully equipped kitchen with 4-burner gas stove. Perfect for families or groups exploring the Cape.</p>
           <div class="unit-rating"><span class="stars">★★★★</span> New listing</div>
@@ -778,13 +794,7 @@
       <!-- ── PELICAN ── -->
       <article class="unit-card" aria-label="Pelican — Unit 3">
         <div class="unit-img">
-          <img
-            src="https://a0.muscache.com/im/pictures/hosting/Hosting-1543975056455944574/original/56554075-cafd-42f8-86e5-4fed1bf00208.jpeg?im_w=800"
-            alt="Pelican unit — three-bedroom apartment"
-            loading="lazy" width="800" height="600"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-          />
-          <div class="unit-img-placeholder" style="display:none"><img src="assets/images/logo2.png" alt="" /><span class="unit-img-placeholder-hint">unit-pelican-1.jpg</span></div>
+          <img src="assets/images/pelican2.jpg" alt="Pelican unit — three-bedroom apartment" loading="lazy" />
         </div>
         <div class="nameplate">
           <img class="nameplate-icon" src="assets/images/pelican1.png" alt="Pelican bird illustration" />
@@ -803,7 +813,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
               Up to 6 guests
             </span>
-            <span class="meta-item">🛁 2 Baths</span>
+            <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16v4a4 4 0 01-4 4H8a4 4 0 01-4-4v-4z"/><path d="M6 12V6a2 2 0 012-2h1a2 2 0 012 2v1"/></svg> 2 Baths</span>
           </div>
           <p class="unit-desc">Three double beds, two bathrooms, and braai terrace with direct garden access. Our most-loved unit — consistently top-rated by guests for space, finish, and location.</p>
           <div class="unit-rating"><span class="stars">★★★★★</span> 4.89 · Top Rated</div>
@@ -819,13 +829,7 @@
       <!-- ── SUNBIRD ── -->
       <article class="unit-card" aria-label="Sunbird — Unit 4">
         <div class="unit-img">
-          <img
-            src="https://a0.muscache.com/im/pictures/hosting/Hosting-1543975061015217029/original/7f3fc1f1-3e03-4bc3-817e-b335103eb984.jpeg?im_w=800"
-            alt="Sunbird unit — newly built 2025 one-bedroom"
-            loading="lazy" width="800" height="600"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-          />
-          <div class="unit-img-placeholder" style="display:none"><img src="assets/images/logo2.png" alt="" /><span class="unit-img-placeholder-hint">unit-sunbird-1.jpg</span></div>
+          <img src="assets/images/sunbird2.jpg" alt="Sunbird unit — newly built 2025 one-bedroom" loading="lazy" />
         </div>
         <div class="nameplate">
           <img class="nameplate-icon" src="assets/images/sunbird1.png" alt="Sunbird bird illustration" />
@@ -844,7 +848,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
               Up to 3 guests
             </span>
-            <span class="meta-item">🚿 1 Bath</span>
+            <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16v4a4 4 0 01-4 4H8a4 4 0 01-4-4v-4z"/><path d="M6 12V6a2 2 0 012-2h1a2 2 0 012 2v1"/></svg> 1 Bath</span>
           </div>
           <p class="unit-desc">Newly built in 2025. Modern one-bedroom with double bed, sleeper couch, and a fresh shower bathroom. Everything brand new — crisp finishes, no wear, no compromise.</p>
           <div class="unit-rating"><span class="stars">★★★★½</span> 4.6 · New Build</div>
@@ -1040,18 +1044,18 @@
         </ul>
       </div>
 
-      <!-- RIGHT: photo grid — tall left, full-height right -->
+      <!-- RIGHT: two photos side by side -->
       <div class="deck-photos">
         <img
           class="dp-tall"
           src="assets/images/deck-angle.jpg"
-          alt="Tiered timber sun deck at dusk — close-up angle showing the three levels and sun loungers"
+          alt="Tiered timber sun deck at dusk — close-up angle"
           loading="lazy"
         />
         <img
           class="dp-tall"
-          src="assets/images/deck-front.jpg"
-          alt="Front view of the full lodge at twilight with tiered deck and lawns in foreground"
+          src="assets/images/pool.jpg"
+          alt="Shared swimming pool in the garden"
           loading="lazy"
         />
       </div>
