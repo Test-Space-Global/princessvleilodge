@@ -155,7 +155,7 @@
       background-position: center 30%;
     }
     .hero-content {
-      position: relative; z-index: 2;
+      position: relative; z-index: 6; /* above curtains */
       padding: 56px 20px 88px;
       max-width: 1100px; margin: 0 auto; width: 100%;
     }
@@ -573,6 +573,63 @@
       .book-platforms { grid-template-columns: 1fr; }
     }
 
+    /* ── CURTAINS ─────────────────────────────────────────── */
+    .curtain-wrap {
+      position: absolute; inset: 0;
+      z-index: 4; pointer-events: none;
+      overflow: hidden;
+    }
+    /* Left curtain */
+    .curtain-left, .curtain-right {
+      position: absolute; top: 0; bottom: -20px;
+      width: 58%;
+      transition: transform .05s linear;
+      will-change: transform;
+    }
+    .curtain-left  { left: 0; transform-origin: left center; }
+    .curtain-right { right: 0; transform-origin: right center; }
+
+    /* Curtain rod */
+    .curtain-rod {
+      position: absolute; top: var(--nav-h); left: 0; right: 0;
+      height: 14px; z-index: 5; pointer-events: none;
+      background: linear-gradient(to bottom, #8B6A3A 0%, #C8A96E 40%, #8B6A3A 100%);
+      box-shadow: 0 2px 8px rgba(44,31,20,.5);
+    }
+    .curtain-rod::before,
+    .curtain-rod::after {
+      content: '';
+      position: absolute; top: -4px;
+      width: 22px; height: 22px;
+      background: radial-gradient(circle at 40% 35%, #e0c080, #8B6A3A);
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(44,31,20,.5);
+    }
+    .curtain-rod::before { left: -4px; }
+    .curtain-rod::after  { right: -4px; }
+
+    /* Curtain SVG fills the panel */
+    .curtain-svg {
+      width: 100%; height: 100%;
+      display: block;
+    }
+
+    /* WA button inside hero — tucked left, behind the closing curtain */
+    .wa-hero {
+      position: absolute;
+      bottom: 100px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3; /* below curtains (z:4) so curtain overlaps it */
+      opacity: 0;
+      transition: opacity .4s;
+      pointer-events: none;
+    }
+    /* Once curtains open a bit, fade in hero WA */
+    .hero.curtain-open .wa-hero {
+      opacity: .85;
+      pointer-events: auto;
+    }
+
     /* ── WHATSAPP FLOAT ───────────────────────────────────── */
     .wa-float {
       position: fixed; bottom: 28px; right: 24px; z-index: 500;
@@ -581,10 +638,12 @@
       border-radius: 54px;
       padding: 6px 14px 6px 6px;
       box-shadow: 0 6px 28px rgba(18,140,126,.5);
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, box-shadow .2s, opacity .5s;
       line-height: 0;
       text-decoration: none;
+      opacity: 0; pointer-events: none;
     }
+    .wa-float.visible { opacity: 1; pointer-events: auto; }
     .wa-float:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 36px rgba(18,140,126,.6);
@@ -593,7 +652,6 @@
       width: 220px; height: 72px; display: block;
       overflow: visible;
     }
-    /* On small screens shrink the button a little */
     @media (max-width: 480px) {
       .wa-svg { width: 180px; height: 58px; }
       .wa-float { bottom: 16px; right: 12px; }
@@ -674,7 +732,165 @@
 
 <!-- ── HERO ─────────────────────────────────────────────── -->
 <section class="hero" aria-labelledby="hero-heading">
-  <div class="hero-bg" role="img" aria-label="Princess Vlei Lodge garden at dusk with Table Mountain backdrop"></div>
+  <div class="hero-bg" role="img" aria-label="Princess Vlei wetland with Table Mountain — view from Princess Vlei Lodge"></div>
+
+  <!-- Curtain rod -->
+  <div class="curtain-rod" aria-hidden="true"></div>
+
+  <!-- Curtains -->
+  <div class="curtain-wrap" aria-hidden="true" id="curtain-wrap">
+
+    <!-- LEFT curtain SVG -->
+    <div class="curtain-left" id="curtain-left">
+      <svg class="curtain-svg" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Linen gradient: warm cream with subtle warm-cool folds -->
+          <linearGradient id="cl-fold1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#f0e6d0" stop-opacity="1"/>
+            <stop offset="18%"  stop-color="#ddd0b4" stop-opacity="1"/>
+            <stop offset="35%"  stop-color="#f5eddb" stop-opacity="1"/>
+            <stop offset="52%"  stop-color="#c8b898" stop-opacity="1"/>
+            <stop offset="68%"  stop-color="#e8dcc4" stop-opacity="1"/>
+            <stop offset="82%"  stop-color="#b8a888" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#d8c8a8" stop-opacity="1"/>
+          </linearGradient>
+          <!-- Fabric shadow at inner edge (right side of left curtain) -->
+          <linearGradient id="cl-edge" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="rgba(44,31,14,0)"/>
+            <stop offset="100%" stop-color="rgba(44,31,14,0.35)"/>
+          </linearGradient>
+          <!-- Vertical shading -->
+          <linearGradient id="cl-vert" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="rgba(44,31,14,0.12)"/>
+            <stop offset="30%"  stop-color="rgba(44,31,14,0)"/>
+            <stop offset="100%" stop-color="rgba(44,31,14,0.08)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Main fabric shape — irregular wavy right edge for natural drape -->
+        <path d="
+          M0,0
+          L400,0
+          C390,60 375,120 385,200
+          C395,280 370,340 380,430
+          C392,520 365,590 372,680
+          C380,760 355,820 345,900
+          L0,900
+          Z
+        " fill="url(#cl-fold1)"/>
+
+        <!-- Fold lines — vertical ripples -->
+        <path d="M60,0 C58,150 62,300 58,450 C54,600 60,750 56,900"  stroke="rgba(180,155,110,.25)" stroke-width="1.5" fill="none"/>
+        <path d="M130,0 C133,120 127,260 131,400 C135,540 128,680 132,900" stroke="rgba(140,115,75,.2)"  stroke-width="1"   fill="none"/>
+        <path d="M200,0 C196,100 204,250 198,400 C192,550 200,700 196,900" stroke="rgba(180,155,110,.2)"  stroke-width="1.5" fill="none"/>
+        <path d="M270,0 C274,130 266,270 272,420 C278,570 268,710 274,900" stroke="rgba(140,115,75,.15)" stroke-width="1"   fill="none"/>
+        <path d="M340,0 C337,80  343,200 338,360 C333,520 340,680 336,900" stroke="rgba(180,155,110,.2)"  stroke-width="1"   fill="none"/>
+
+        <!-- Tie-back knot area — lower left -->
+        <path d="
+          M0,580
+          C60,560 120,530 140,500
+          C160,470 140,450 100,460
+          C60,470 20,510 0,540
+          Z
+        " fill="rgba(200,169,110,.18)"/>
+        <!-- Tassel rope -->
+        <path d="M115,490 C100,520 95,550 98,580 C101,610 108,625 105,650"
+          stroke="#a08040" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- Tassel head -->
+        <ellipse cx="106" cy="656" rx="7" ry="5" fill="#c8a060"/>
+        <!-- Tassel fringe -->
+        <line x1="100" y1="661" x2="98"  y2="680" stroke="#a07030" stroke-width="1.2"/>
+        <line x1="104" y1="662" x2="103" y2="682" stroke="#c09040" stroke-width="1.2"/>
+        <line x1="108" y1="662" x2="108" y2="681" stroke="#a07030" stroke-width="1.2"/>
+        <line x1="112" y1="661" x2="113" y2="679" stroke="#c09040" stroke-width="1.2"/>
+
+        <!-- Edge shadow overlay -->
+        <rect x="0" y="0" width="400" height="900" fill="url(#cl-edge)"/>
+        <!-- Vertical top-bottom shading -->
+        <rect x="0" y="0" width="400" height="900" fill="url(#cl-vert)"/>
+
+        <!-- Top gather pleats -->
+        <path d="M0,0 C20,-2 25,18 40,15 C55,12 58,-3 75,0 C92,3 95,20 112,17 C129,14 130,-2 148,0 C166,2 168,18 186,15 C204,12 205,-3 222,0 C239,3 241,20 258,16 C275,12 276,-3 294,0 C312,3 313,18 330,15 C347,12 348,-3 365,0 C382,3 385,16 400,14 L400,0 Z"
+          fill="rgba(44,31,14,0.1)"/>
+      </svg>
+    </div>
+
+    <!-- RIGHT curtain SVG (mirrored) -->
+    <div class="curtain-right" id="curtain-right">
+      <svg class="curtain-svg" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cr-fold1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#d8c8a8" stop-opacity="1"/>
+            <stop offset="18%"  stop-color="#b8a888" stop-opacity="1"/>
+            <stop offset="35%"  stop-color="#e8dcc4" stop-opacity="1"/>
+            <stop offset="52%"  stop-color="#c8b898" stop-opacity="1"/>
+            <stop offset="68%"  stop-color="#f5eddb" stop-opacity="1"/>
+            <stop offset="82%"  stop-color="#ddd0b4" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#f0e6d0" stop-opacity="1"/>
+          </linearGradient>
+          <linearGradient id="cr-edge" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="rgba(44,31,14,0.35)"/>
+            <stop offset="100%" stop-color="rgba(44,31,14,0)"/>
+          </linearGradient>
+          <linearGradient id="cr-vert" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="rgba(44,31,14,0.12)"/>
+            <stop offset="30%"  stop-color="rgba(44,31,14,0)"/>
+            <stop offset="100%" stop-color="rgba(44,31,14,0.08)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Main fabric — wavy left edge -->
+        <path d="
+          M400,0
+          L0,0
+          C10,60 25,120 15,200
+          C5,280 30,340 20,430
+          C8,520 35,590 28,680
+          C20,760 45,820 55,900
+          L400,900
+          Z
+        " fill="url(#cr-fold1)"/>
+
+        <!-- Fold lines -->
+        <path d="M340,0 C342,150 338,300 342,450 C346,600 340,750 344,900" stroke="rgba(180,155,110,.25)" stroke-width="1.5" fill="none"/>
+        <path d="M270,0 C267,120 273,260 269,400 C265,540 272,680 268,900" stroke="rgba(140,115,75,.2)"  stroke-width="1"   fill="none"/>
+        <path d="M200,0 C204,100 196,250 202,400 C208,550 200,700 204,900" stroke="rgba(180,155,110,.2)"  stroke-width="1.5" fill="none"/>
+        <path d="M130,0 C126,130 134,270 128,420 C122,570 132,710 126,900" stroke="rgba(140,115,75,.15)" stroke-width="1"   fill="none"/>
+        <path d="M60,0  C63,80  57,200 62,360 C67,520 60,680 64,900"  stroke="rgba(180,155,110,.2)"  stroke-width="1"   fill="none"/>
+
+        <!-- Tie-back — lower right -->
+        <path d="
+          M400,580
+          C340,560 280,530 260,500
+          C240,470 260,450 300,460
+          C340,470 380,510 400,540
+          Z
+        " fill="rgba(200,169,110,.18)"/>
+        <!-- Tassel rope -->
+        <path d="M285,490 C300,520 305,550 302,580 C299,610 292,625 295,650"
+          stroke="#a08040" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- Tassel head -->
+        <ellipse cx="294" cy="656" rx="7" ry="5" fill="#c8a060"/>
+        <!-- Tassel fringe -->
+        <line x1="288" y1="661" x2="287" y2="680" stroke="#a07030" stroke-width="1.2"/>
+        <line x1="292" y1="662" x2="291" y2="682" stroke="#c09040" stroke-width="1.2"/>
+        <line x1="296" y1="662" x2="296" y2="681" stroke="#a07030" stroke-width="1.2"/>
+        <line x1="300" y1="661" x2="301" y2="679" stroke="#c09040" stroke-width="1.2"/>
+
+        <!-- Edge shadow -->
+        <rect x="0" y="0" width="400" height="900" fill="url(#cr-edge)"/>
+        <rect x="0" y="0" width="400" height="900" fill="url(#cr-vert)"/>
+
+        <!-- Top pleats -->
+        <path d="M400,0 C380,-2 375,18 360,15 C345,12 342,-3 325,0 C308,3 305,20 288,17 C271,14 270,-2 252,0 C234,2 232,18 214,15 C196,12 195,-3 178,0 C161,3 159,20 142,16 C125,12 124,-3 106,0 C88,3 87,18 70,15 C53,12 52,-3 35,0 C18,3 15,16 0,14 L0,0 Z"
+          fill="rgba(44,31,14,0.1)"/>
+      </svg>
+    </div>
+
+  </div><!-- /curtain-wrap -->
+
+  <!-- Hero content -->
   <div class="hero-content">
     <p class="eyebrow">Princess Vlei · Heathfield · Cape Town</p>
     <h1 id="hero-heading">
@@ -686,6 +902,10 @@
       <a href="#units" class="btn btn-outline">Explore Units</a>
     </div>
   </div>
+
+  <!-- WA button in hero — peeks through as curtains open -->
+  <div class="wa-hero" id="wa-hero" aria-hidden="true"></div>
+
   <a href="#about" class="scroll-cue" aria-label="Scroll to content">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
       <path d="M12 5v14M5 12l7 7 7-7"/>
@@ -1371,22 +1591,53 @@
   </svg>
 </a>
 
-<!-- ── JS: Mobile nav toggle ─────────────────────────────── -->
+<!-- ── JS ────────────────────────────────────────────────── -->
 <script>
+  /* ── Mobile nav ── */
   const burger = document.getElementById('burger-btn');
   const drawer = document.getElementById('nav-drawer');
   burger.addEventListener('click', () => {
     const open = drawer.classList.toggle('open');
     burger.setAttribute('aria-expanded', open);
     burger.innerHTML = open
-      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
-      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
   });
   function closeDrawer() {
     drawer.classList.remove('open');
     burger.setAttribute('aria-expanded', false);
-    burger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+    burger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
   }
+
+  /* ── Curtain parting on scroll ── */
+  const curtainLeft  = document.getElementById('curtain-left');
+  const curtainRight = document.getElementById('curtain-right');
+  const heroEl       = document.querySelector('.hero');
+  const waFloat      = document.querySelector('.wa-float');
+
+  function updateCurtains() {
+    const heroH    = heroEl.offsetHeight;
+    const scrollY  = window.scrollY;
+
+    // Progress 0 (top) → 1 (fully parted, at ~60% of hero height)
+    const progress = Math.min(scrollY / (heroH * 0.6), 1);
+
+    // Curtains slide outward — translate by up to 88% of their width
+    const slide = progress * 88;
+    curtainLeft.style.transform  = `translateX(-${slide}%)`;
+    curtainRight.style.transform = `translateX(${slide}%)`;
+
+    // WA float button: hidden inside hero, visible once scrolled past it
+    if (scrollY > heroH * 0.5) {
+      waFloat.classList.add('visible');
+    } else {
+      waFloat.classList.remove('visible');
+    }
+  }
+
+  // Run on scroll and on load
+  window.addEventListener('scroll', updateCurtains, { passive: true });
+  updateCurtains();
 </script>
 
 </body>
