@@ -148,9 +148,10 @@
       position: absolute; inset: 0;
       /* Airbnb CDN — works in-browser; replace with assets/images/hero-main.jpg once downloaded */
       background-image:
-        linear-gradient(to bottom, rgba(30,42,22,.15) 0%, rgba(30,42,22,.55) 55%, rgba(30,42,22,.92) 100%),
-        url('assets/images/outside1.jpg');
+        linear-gradient(to bottom, rgba(20,35,18,.1) 0%, rgba(20,35,18,.45) 55%, rgba(20,35,18,.92) 100%),
+        url('assets/images/outside3.jpg');
       background-size: cover;
+      background-position: center 35%;
       background-position: center 30%;
     }
     .hero-content {
@@ -198,9 +199,11 @@
       position: absolute; bottom: 24px; left: 50%;
       transform: translateX(-50%); z-index: 2;
       display: flex; flex-direction: column; align-items: center; gap: 5px;
-      color: rgba(245,240,232,.4); font-size: .7rem;
+      color: rgba(245,240,232,.45); font-size: .7rem;
       letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none;
       animation: nudge 2.2s ease-in-out infinite;
+      cursor: pointer;
     }
     .scroll-cue svg { width: 18px; }
     @keyframes nudge {
@@ -284,8 +287,8 @@
     .units-section {
       position: relative;
       background:
-        linear-gradient(to bottom, rgba(237,230,214,.97) 0%, rgba(237,230,214,.88) 100%),
-        url('assets/images/outside3.jpg') center/cover no-repeat fixed;
+        linear-gradient(to bottom, rgba(237,230,214,.96) 0%, rgba(237,230,214,.9) 100%),
+        url('assets/images/outside5.jpg') center/cover no-repeat fixed;
     }
     .units-section .container { position: relative; z-index: 1; }
     .units-hdr { text-align: center; max-width: 600px; margin: 0 auto 52px; }
@@ -683,12 +686,12 @@
       <a href="#units" class="btn btn-outline">Explore Units</a>
     </div>
   </div>
-  <div class="scroll-cue" aria-hidden="true">
+  <a href="#about" class="scroll-cue" aria-label="Scroll to content">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
       <path d="M12 5v14M5 12l7 7 7-7"/>
     </svg>
     scroll
-  </div>
+  </a>
 </section>
 
 <!-- ── STAT STRIP ────────────────────────────────────────── -->
