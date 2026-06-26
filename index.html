@@ -1596,30 +1596,39 @@
   const curtainRight = document.getElementById('curtain-right');
   const waFloat      = document.querySelector('.wa-float');
 
-  // Start fully closed
-  curtainLeft.style.transform  = 'translateX(0%)';
-  curtainRight.style.transform = 'translateX(0%)';
+  /* ── Curtain auto-open — tablets & desktops only (≥768px) ── */
+  const isMobile = window.matchMedia('(max-width: 767px)').matches;
 
-  // Brief pause so the visitor can register the curtains, then part them
-  setTimeout(() => {
-    // Smooth cubic-bezier — slow start, accelerates, then eases to a gentle stop
-    // leaving ~12% peeking at each edge (curtains wider than viewport so they
-    // slide off-screen but the edge fabric still hangs slightly visible)
-    curtainLeft.style.transition  = 'transform 2.8s cubic-bezier(0.4, 0, 0.2, 1)';
-    curtainRight.style.transition = 'transform 2.8s cubic-bezier(0.4, 0, 0.2, 1)';
-    curtainLeft.style.transform   = 'translateX(-91%)';
-    curtainRight.style.transform  = 'translateX(91%)';
-  }, 600);
-
-  // Fade in hero text after curtains are mostly open
-  setTimeout(() => {
-    document.querySelector('.hero-content').style.opacity = '1';
-  }, 1800);
-
-  // WA float appears after the full reveal
-  setTimeout(() => {
+  if (isMobile) {
+    // On mobile: hide curtains entirely, show content immediately
+    document.getElementById('curtain-left').style.display  = 'none';
+    document.getElementById('curtain-right').style.display = 'none';
+    document.querySelector('.curtain-rod').style.display   = 'none';
+    document.querySelector('.hero-content').style.opacity  = '1';
     waFloat.classList.add('visible');
-  }, 3200);
+  } else {
+    // Start fully closed
+    curtainLeft.style.transform  = 'translateX(0%)';
+    curtainRight.style.transform = 'translateX(0%)';
+
+    // Brief pause so the visitor can register the curtains, then part them
+    setTimeout(() => {
+      curtainLeft.style.transition  = 'transform 2.8s cubic-bezier(0.4, 0, 0.2, 1)';
+      curtainRight.style.transition = 'transform 2.8s cubic-bezier(0.4, 0, 0.2, 1)';
+      curtainLeft.style.transform   = 'translateX(-91%)';
+      curtainRight.style.transform  = 'translateX(91%)';
+    }, 600);
+
+    // Fade in hero text after curtains are mostly open
+    setTimeout(() => {
+      document.querySelector('.hero-content').style.opacity = '1';
+    }, 1800);
+
+    // WA float appears after the full reveal
+    setTimeout(() => {
+      waFloat.classList.add('visible');
+    }, 3200);
+  }
 
   /* ── WA float: hide when scrolled back to very top ── */
   window.addEventListener('scroll', () => {
