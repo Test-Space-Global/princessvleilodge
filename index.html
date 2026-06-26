@@ -154,11 +154,6 @@
       background-position: center 35%;
       background-position: center 30%;
     }
-    .hero-content {
-      position: relative; z-index: 6; /* above curtains */
-      padding: 56px 20px 88px;
-      max-width: 1100px; margin: 0 auto; width: 100%;
-    }
     .eyebrow {
       font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
       color: var(--gold-lt); margin-bottom: 18px;
@@ -197,9 +192,9 @@
 
     .scroll-cue {
       position: absolute; bottom: 24px; left: 50%;
-      transform: translateX(-50%); z-index: 2;
+      transform: translateX(-50%); z-index: 6;
       display: flex; flex-direction: column; align-items: center; gap: 5px;
-      color: rgba(245,240,232,.45); font-size: .7rem;
+      color: rgba(245,240,232,.55); font-size: .7rem;
       letter-spacing: .12em; text-transform: uppercase;
       text-decoration: none;
       animation: nudge 2.2s ease-in-out infinite;
@@ -579,11 +574,10 @@
       z-index: 4; pointer-events: none;
       overflow: hidden;
     }
-    /* Left curtain */
     .curtain-left, .curtain-right {
       position: absolute; top: 0; bottom: -20px;
       width: 58%;
-      transition: transform .05s linear;
+      /* NO transition here — JS sets it after the initial closed position */
       will-change: transform;
     }
     .curtain-left  { left: 0; transform-origin: left center; }
@@ -608,26 +602,17 @@
     .curtain-rod::before { left: -4px; }
     .curtain-rod::after  { right: -4px; }
 
-    /* Curtain SVG fills the panel */
     .curtain-svg {
-      width: 100%; height: 100%;
-      display: block;
+      width: 100%; height: 100%; display: block;
     }
 
-    /* WA button inside hero — tucked left, behind the closing curtain */
-    .wa-hero {
-      position: absolute;
-      bottom: 100px; left: 50%;
-      transform: translateX(-50%);
-      z-index: 3; /* below curtains (z:4) so curtain overlaps it */
+    /* Hero content fades in mid-reveal — starts invisible */
+    .hero-content {
+      position: relative; z-index: 6;
+      padding: 56px 20px 88px;
+      max-width: 1100px; margin: 0 auto; width: 100%;
       opacity: 0;
-      transition: opacity .4s;
-      pointer-events: none;
-    }
-    /* Once curtains open a bit, fade in hero WA */
-    .hero.curtain-open .wa-hero {
-      opacity: .85;
-      pointer-events: auto;
+      transition: opacity 1s ease;
     }
 
     /* ── WHATSAPP FLOAT ───────────────────────────────────── */
@@ -902,9 +887,6 @@
       <a href="#units" class="btn btn-outline">Explore Units</a>
     </div>
   </div>
-
-  <!-- WA button in hero — peeks through as curtains open -->
-  <div class="wa-hero" id="wa-hero" aria-hidden="true"></div>
 
   <a href="#about" class="scroll-cue" aria-label="Scroll to content">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1609,35 +1591,44 @@
     burger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
   }
 
-  /* ── Curtain parting on scroll ── */
+  /* ── Curtain auto-open on page load ── */
   const curtainLeft  = document.getElementById('curtain-left');
   const curtainRight = document.getElementById('curtain-right');
-  const heroEl       = document.querySelector('.hero');
   const waFloat      = document.querySelector('.wa-float');
 
-  function updateCurtains() {
-    const heroH    = heroEl.offsetHeight;
-    const scrollY  = window.scrollY;
+  // Start fully closed
+  curtainLeft.style.transform  = 'translateX(0%)';
+  curtainRight.style.transform = 'translateX(0%)';
 
-    // Progress 0 (top) → 1 (fully parted, at ~60% of hero height)
-    const progress = Math.min(scrollY / (heroH * 0.6), 1);
+  // Brief pause so the visitor can register the curtains, then part them
+  setTimeout(() => {
+    // Smooth cubic-bezier — slow start, accelerates, then eases to a gentle stop
+    // leaving ~12% peeking at each edge (curtains wider than viewport so they
+    // slide off-screen but the edge fabric still hangs slightly visible)
+    curtainLeft.style.transition  = 'transform 2.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    curtainRight.style.transition = 'transform 2.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    curtainLeft.style.transform   = 'translateX(-91%)';
+    curtainRight.style.transform  = 'translateX(91%)';
+  }, 600);
 
-    // Curtains slide outward — translate by up to 88% of their width
-    const slide = progress * 88;
-    curtainLeft.style.transform  = `translateX(-${slide}%)`;
-    curtainRight.style.transform = `translateX(${slide}%)`;
+  // Fade in hero text after curtains are mostly open
+  setTimeout(() => {
+    document.querySelector('.hero-content').style.opacity = '1';
+  }, 1800);
 
-    // WA float button: hidden inside hero, visible once scrolled past it
-    if (scrollY > heroH * 0.5) {
-      waFloat.classList.add('visible');
-    } else {
+  // WA float appears after the full reveal
+  setTimeout(() => {
+    waFloat.classList.add('visible');
+  }, 3200);
+
+  /* ── WA float: hide when scrolled back to very top ── */
+  window.addEventListener('scroll', () => {
+    if (window.scrollY < 80) {
       waFloat.classList.remove('visible');
+    } else {
+      waFloat.classList.add('visible');
     }
-  }
-
-  // Run on scroll and on load
-  window.addEventListener('scroll', updateCurtains, { passive: true });
-  updateCurtains();
+  }, { passive: true });
 </script>
 
 </body>
