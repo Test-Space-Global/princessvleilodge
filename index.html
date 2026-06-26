@@ -281,7 +281,13 @@
     }
 
     /* ── UNITS ────────────────────────────────────────────── */
-    .units-section { background: var(--linen-dk); }
+    .units-section {
+      position: relative;
+      background:
+        linear-gradient(to bottom, rgba(237,230,214,.97) 0%, rgba(237,230,214,.88) 100%),
+        url('assets/images/outside3.jpg') center/cover no-repeat fixed;
+    }
+    .units-section .container { position: relative; z-index: 1; }
     .units-hdr { text-align: center; max-width: 600px; margin: 0 auto 52px; }
     .units-hdr .sec-label { justify-content: center; }
     .units-hdr .sec-label::before { display: none; }
@@ -289,8 +295,11 @@
 
     .units-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 22px;
+    }
+    @media (max-width: 640px) {
+      .units-grid { grid-template-columns: 1fr; }
     }
 
     .unit-card {
@@ -559,6 +568,32 @@
 
     @media (max-width: 720px) {
       .book-platforms { grid-template-columns: 1fr; }
+    }
+
+    /* ── WHATSAPP FLOAT ───────────────────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 24px; z-index: 500;
+      display: block;
+      background: #128C7E;
+      border-radius: 54px;
+      padding: 6px 14px 6px 6px;
+      box-shadow: 0 6px 28px rgba(18,140,126,.5);
+      transition: transform .2s, box-shadow .2s;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .wa-float:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(18,140,126,.6);
+    }
+    .wa-svg {
+      width: 220px; height: 72px; display: block;
+      overflow: visible;
+    }
+    /* On small screens shrink the button a little */
+    @media (max-width: 480px) {
+      .wa-svg { width: 180px; height: 58px; }
+      .wa-float { bottom: 16px; right: 12px; }
     }
 
     /* ── FOOTER ───────────────────────────────────────────── */
@@ -1176,16 +1211,162 @@
 <footer>
   <div class="foot-logo">Princess <em>Vlei</em> Lodge</div>
   <p>Heathfield, Cape Town · South Africa</p>
+  <p style="margin-top:8px;">
+    <a href="tel:+27727114934" style="color:var(--gold);text-decoration:none;">+27 72 711 4934</a>
+    &nbsp;·&nbsp;
+    <a href="https://wa.me/27727114934" style="color:var(--gold);text-decoration:none;">WhatsApp</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:info@princessvleilodge.co.za" style="color:var(--gold);text-decoration:none;opacity:.55;" title="Email coming soon">info@princessvleilodge.co.za</a>
+  </p>
   <ul class="foot-links">
     <li><a href="#about">About</a></li>
     <li><a href="#units">Units</a></li>
     <li><a href="#whole-lodge">Group Bookings</a></li>
     <li><a href="#location">Location</a></li>
     <li><a href="https://book.nightsbridge.com/38899" target="_blank" rel="noopener noreferrer">Book Direct</a></li>
-    <li><a href="mailto:info@princessvleilodge.co.za">Contact</a></li>
   </ul>
   <p>© 2025 Princess Vlei Lodge. All rights reserved.</p>
 </footer>
+
+<!-- ── WHATSAPP FLOATING BUTTON ───────────────────────────── -->
+<a
+  href="https://wa.me/27727114934?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20Princess%20Vlei%20Lodge"
+  class="wa-float"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chat on WhatsApp"
+>
+  <svg class="wa-svg" viewBox="0 0 220 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+    <!-- ── WA icon circle ── -->
+    <circle cx="22" cy="44" r="16" fill="#128C7E"/>
+    <path fill="#fff" d="M22 31.5c-6.9 0-12.5 5.6-12.5 12.5 0 2.2.6 4.3 1.6 6.1l-1.7 6.2 6.4-1.7c1.7.9 3.7 1.4 5.7 1.4 6.9 0 12.5-5.6 12.5-12.5S28.9 31.5 22 31.5zm7.3 17.3c-.3.8-1.6 1.5-2.2 1.6-.6.1-1.2.1-3.8-1.3-3.2-1.7-5.2-5-5.4-5.2-.2-.2-1.4-1.8-1.4-3.5 0-1.7.9-2.5 1.2-2.8.3-.3.7-.4 1-.4h.7c.3 0 .6.1.9.7l1.2 2.9c.1.3.1.6-.1.9l-.6.9c-.1.2-.2.4-.1.7.4.7 1.5 2.1 2.8 3 1.4 1 2.6 1.3 3 1.5.3.1.6.1.8-.1l.9-1c.2-.3.5-.3.8-.2l2.8 1.3c.3.1.5.3.5.6v.4z"/>
+
+    <!-- ── TEXT: "Chat on WhatsApp" with birds perching ── -->
+
+    <!-- 
+      LETTER POSITIONS (approximate x centers for bird feet):
+      C ≈ x48   h ≈ x59   a ≈ x67   t ≈ x74
+      [space]
+      o ≈ x85   n ≈ x94
+      [space]
+      W ≈ x107  h ≈ x119  a ≈ x127  t ≈ x134  s ≈ x141  A ≈ x149  p ≈ x157  p ≈ x165
+    -->
+
+    <!-- "Chat on WhatsApp" text -->
+    <text x="43" y="52" font-family="DM Sans, sans-serif" font-size="15" font-weight="500" fill="#ffffff" letter-spacing="0.3">Chat on WhatsApp</text>
+
+    <!-- ══ BIRD: STARLING on the "C" (x≈48, top of C cap ≈ y34) ══ -->
+    <g transform="translate(47, 10)">
+      <!-- tail -->
+      <path d="M-4 20 Q-7 25 -9 27 Q-5 23 -3 20Z" fill="#1a3a28" opacity=".9"/>
+      <!-- wing -->
+      <path d="M7 18 Q11 13 9 22 Q5 21 7 18Z" fill="#1a3a28" opacity=".9"/>
+      <!-- body -->
+      <ellipse cx="1" cy="18" rx="6" ry="4.5" fill="#1d4030"/>
+      <!-- speckles -->
+      <circle cx="-1" cy="17" r=".8" fill="#7de8b8" opacity=".7"/>
+      <circle cx="2" cy="15.5" r=".7" fill="#7de8b8" opacity=".65"/>
+      <circle cx="3.5" cy="18.5" r=".7" fill="#7de8b8" opacity=".6"/>
+      <circle cx="0" cy="20" r=".6" fill="#7de8b8" opacity=".55"/>
+      <!-- head -->
+      <circle cx="1" cy="12" r="3.5" fill="#122a1e"/>
+      <!-- eye -->
+      <circle cx="2.5" cy="11.2" r="1.1" fill="#000" opacity=".85"/>
+      <circle cx="3" cy="10.8" r=".42" fill="#fff" opacity=".8"/>
+      <!-- beak -->
+      <polygon points="1,12.5 5.2,11.8 1,13.4" fill="#c8a96e"/>
+      <!-- legs to letter top -->
+      <line x1="-1" y1="22" x2="-2" y2="30" stroke="#3a5a48" stroke-width="1" stroke-linecap="round"/>
+      <line x1="2" y1="22" x2="2.5" y2="30" stroke="#3a5a48" stroke-width="1" stroke-linecap="round"/>
+      <!-- feet -->
+      <path d="M-2 30 L-4 31.5 M-2 30 L-1 31.8 M-2 30 L0 31" stroke="#3a5a48" stroke-width=".8" stroke-linecap="round"/>
+      <path d="M2.5 30 L0.5 31.5 M2.5 30 L2.5 31.8 M2.5 30 L4 31" stroke="#3a5a48" stroke-width=".8" stroke-linecap="round"/>
+    </g>
+
+    <!-- ══ BIRD: BLUE CRANE on the "t" (x≈74) ══ -->
+    <g transform="translate(74, 4)">
+      <!-- tail plumes -->
+      <path d="M7 22 Q13 17 14 24 Q9 24 7 22Z" fill="#1e3d6e"/>
+      <path d="M7 24 Q13 25 13 29 Q9 27 7 24Z" fill="#2a4a7a" opacity=".6"/>
+      <!-- body -->
+      <ellipse cx="1" cy="22" rx="5.5" ry="4" fill="#2a4a7a"/>
+      <!-- neck -->
+      <path d="M1 19 Q0 13 0.5 8" stroke="#1e3d6e" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- head -->
+      <circle cx="0.5" cy="6.5" r="3" fill="#1e3d6e"/>
+      <!-- eye -->
+      <circle cx="1.8" cy="5.8" r=".9" fill="#000" opacity=".8"/>
+      <circle cx="2.2" cy="5.5" r=".35" fill="#fff" opacity=".75"/>
+      <!-- beak -->
+      <path d="M0.5 7.5 L5.5 6.5 L0.5 8.5Z" fill="#7aaad0"/>
+      <!-- legs -->
+      <line x1="-1" y1="26" x2="-2" y2="34" stroke="#4a7aaa" stroke-width="1.1" stroke-linecap="round"/>
+      <line x1="2" y1="26" x2="2.5" y2="34" stroke="#4a7aaa" stroke-width="1.1" stroke-linecap="round"/>
+      <!-- feet -->
+      <path d="M-2 34 L-4 35.5 M-2 34 L-1.5 36 M-2 34 L0 35" stroke="#4a7aaa" stroke-width=".8" stroke-linecap="round"/>
+      <path d="M2.5 34 L0.5 35.5 M2.5 34 L2.5 36 M2.5 34 L4 35" stroke="#4a7aaa" stroke-width=".8" stroke-linecap="round"/>
+    </g>
+
+    <!-- ══ BIRD: PELICAN on the "p" (x≈157) ══ -->
+    <g transform="translate(156, 6)">
+      <!-- tail -->
+      <path d="M8 22 Q13 20 12 26 Q8 25 8 22Z" fill="#b8b4a6"/>
+      <!-- body -->
+      <ellipse cx="1" cy="21" rx="6" ry="4.5" fill="#ddd9cc"/>
+      <!-- wing shadow -->
+      <path d="M-6 21 Q-9 17 -7 26 Q-4 24 -6 21Z" fill="#b8b4a6"/>
+      <!-- neck -->
+      <path d="M1 17 Q2 11 1.5 7" stroke="#ddd9cc" stroke-width="3" stroke-linecap="round"/>
+      <!-- head -->
+      <circle cx="1.5" cy="5.5" r="3.5" fill="#ddd9cc"/>
+      <!-- eye -->
+      <circle cx="3" cy="4.6" r="1" fill="#f0a820"/>
+      <circle cx="3" cy="4.6" r=".5" fill="#000"/>
+      <!-- beak -->
+      <path d="M1.5 7 L9.5 8 L9.5 11.5 Q5 13 1.5 10Z" fill="#f0a820"/>
+      <!-- pouch -->
+      <path d="M1.5 10 Q5 13 9.5 11.5 Q7.5 15.5 1.5 13.5Z" fill="#e08030" opacity=".6"/>
+      <!-- legs -->
+      <line x1="-1" y1="25" x2="-2" y2="33" stroke="#9a9080" stroke-width="1.1" stroke-linecap="round"/>
+      <line x1="2" y1="25" x2="2.5" y2="33" stroke="#9a9080" stroke-width="1.1" stroke-linecap="round"/>
+      <!-- feet -->
+      <path d="M-2 33 L-5 34.5 M-2 33 L-1.5 35.5 M-2 33 L1 34.5" stroke="#9a9080" stroke-width=".8" stroke-linecap="round"/>
+      <path d="M2.5 33 L0 34.5 M2.5 33 L2.5 35.5 M2.5 33 L5 34.5" stroke="#9a9080" stroke-width=".8" stroke-linecap="round"/>
+    </g>
+
+    <!-- ══ BIRD: SUNBIRD on the "W" (x≈107) ══ -->
+    <g transform="translate(107, 8)">
+      <!-- long curved tail -->
+      <path d="M-3 20 Q-10 22 -13 28" stroke="#163c16" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <!-- tail base -->
+      <path d="M5 19 Q10 15 11 20 Q7 20 5 19Z" fill="#163c16"/>
+      <!-- body -->
+      <ellipse cx="0" cy="19" rx="5.5" ry="3.8" fill="#1e4e1e"/>
+      <!-- yellow chest -->
+      <ellipse cx="1" cy="20" rx="3.5" ry="2.6" fill="#e8c020"/>
+      <!-- wing -->
+      <path d="M-5 18 Q-8 14 -5 23 Q-3 21 -5 18Z" fill="#163c16"/>
+      <!-- neck -->
+      <path d="M0 16 Q-0.5 11 0 7" stroke="#1e4e1e" stroke-width="2" stroke-linecap="round"/>
+      <!-- head — iridescent blue -->
+      <circle cx="0" cy="5.5" r="3.2" fill="#1535aa"/>
+      <circle cx="0" cy="5.5" r="2.7" fill="#3a6add" opacity=".5"/>
+      <!-- eye -->
+      <circle cx="1.2" cy="4.6" r=".8" fill="#000"/>
+      <circle cx="1.5" cy="4.3" r=".3" fill="#fff" opacity=".8"/>
+      <!-- curved beak -->
+      <path d="M0.5 6.5 Q3.5 6 6.5 4" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+      <!-- legs -->
+      <line x1="-1" y1="22.5" x2="-2" y2="30" stroke="#2a5a2a" stroke-width="1" stroke-linecap="round"/>
+      <line x1="1.5" y1="22.5" x2="2" y2="30" stroke="#2a5a2a" stroke-width="1" stroke-linecap="round"/>
+      <!-- feet -->
+      <path d="M-2 30 L-4 31.5 M-2 30 L-1.5 32 M-2 30 L0 31" stroke="#2a5a2a" stroke-width=".8" stroke-linecap="round"/>
+      <path d="M2 30 L0 31.5 M2 30 L2 32 M2 30 L3.5 31" stroke="#2a5a2a" stroke-width=".8" stroke-linecap="round"/>
+    </g>
+
+  </svg>
+</a>
 
 <!-- ── JS: Mobile nav toggle ─────────────────────────────── -->
 <script>
